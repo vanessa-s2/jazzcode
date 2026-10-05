@@ -34,7 +34,7 @@
     </div>
   </header>
 
-  <!-- Hero Section com a Logo em Destaque -->
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-card">
       <div class="badge-tag">Brechó + Música ao Vivo</div>
@@ -87,14 +87,14 @@
         <div class="ticket-card">
           <div>
             <div class="ticket-type">Ingresso Normal</div>
-            <div class="ticket-price">R$ 35</div>
+            <div class="ticket-price">R$ 35 <span class="per-day">/ dia</span></div>
             <ul class="ticket-features">
               <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
               <li>Nome na Lista de Entrada</li>
             </ul>
           </div>
-          <button class="btn-buy" onclick="openCheckout('Ingresso Normal', 35)">Garantir Ingresso</button>
+          <button class="btn-buy" onclick="openCheckout('Ingresso Normal', 35, 60)">Garantir Ingresso</button>
         </div>
 
         <!-- Opção 2 -->
@@ -102,7 +102,7 @@
           <div class="featured-badge">Mais Popular</div>
           <div>
             <div class="ticket-type">Combo Drink + Adesivos</div>
-            <div class="ticket-price">R$ 55</div>
+            <div class="ticket-price">R$ 55 <span class="per-day">/ dia</span></div>
             <ul class="ticket-features">
               <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
@@ -110,14 +110,14 @@
               <li>Cartela de Adesivos Exclusivos</li>
             </ul>
           </div>
-          <button class="btn-buy" onclick="openCheckout('Combo Drink + Adesivos', 55)">Garantir Combo</button>
+          <button class="btn-buy" onclick="openCheckout('Combo Drink + Adesivos', 55, 95)">Garantir Combo</button>
         </div>
 
         <!-- Opção 3 -->
         <div class="ticket-card">
           <div>
             <div class="ticket-type">Combo VIP Ecobag</div>
-            <div class="ticket-price">R$ 85</div>
+            <div class="ticket-price">R$ 85 <span class="per-day">/ dia</span></div>
             <ul class="ticket-features">
               <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
@@ -126,7 +126,7 @@
               <li><strong>Ecobag Oficial Jazz Code</strong></li>
             </ul>
           </div>
-          <button class="btn-buy" onclick="openCheckout('Combo VIP Ecobag', 85)">Garantir VIP</button>
+          <button class="btn-buy" onclick="openCheckout('Combo VIP Ecobag', 85, 145)">Garantir VIP</button>
         </div>
 
       </div>
@@ -165,14 +165,14 @@
               </label>
               <label class="day-option combo-day">
                 <input type="radio" name="eventDayOption" value="Passaporte 2 Dias (Sáb + Dom)" onchange="handleDayChange()">
-                <span>Passaporte 2 Dias 🎉</span>
+                <span>Passaporte 2 Dias (Desconto Especial) 🎉</span>
               </label>
             </div>
           </div>
 
-          <!-- Banner do Brinde Surpresa (Aparece ao selecionar 2 Dias) -->
+          <!-- Banner do Brinde Surpresa -->
           <div id="surpriseBonus" class="surprise-bonus-banner" style="display: none;">
-            🎁 <strong>BÔNUS EXCLUSIVO:</strong> Comprando o Passaporte 2 Dias você ganha um <strong>BRINDE SURPRESA EXCLUSIVO</strong> do Summer Jazz Code!
+            🎁 <strong>BÔNUS EXCLUSIVO:</strong> Além do preço promocional para os 2 dias, você ganha um <strong>BRINDE SURPRESA EXCLUSIVO</strong> do Summer Jazz Code!
           </div>
 
           <div class="form-group">
@@ -186,12 +186,13 @@
           </div>
 
           <div class="form-group">
-            <label for="ticketQty">Quantidade</label>
-            <input type="number" id="ticketQty" value="1" min="1" max="5" onchange="updateTotal()" required>
+            <label for="ticketQty">Quantidade de Ingressos</label>
+            <input type="number" id="ticketQty" value="1" min="1" max="5" onchange="updateTotal()" oninput="updateTotal()" required>
           </div>
 
           <div class="total-display">
-            Total: R$ <span id="totalPrice">0</span>
+            Valor Unitário: R$ <span id="unitPrice">0</span><br>
+            <strong>Total: R$ <span id="totalPrice">0</span></strong>
           </div>
 
           <button type="submit" class="btn-submit">Confirmar Pedido Simulado</button>
@@ -212,6 +213,7 @@
           <p><strong>Tipo:</strong> <span id="recType"></span></p>
           <p><strong>Dia(s):</strong> <span id="recDay"></span></p>
           <p><strong>Qtd:</strong> <span id="recQty"></span></p>
+          <p><strong>Valor Total:</strong> R$ <span id="recTotal"></span></p>
           <p><strong>Brinde:</strong> <span id="recGift">Nenhum</span></p>
           <p><strong>Código:</strong> #JC2026-<span id="recCode"></span></p>
         </div>

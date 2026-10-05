@@ -1,10 +1,12 @@
-let currentPrice = 0;
+let singleDayPrice = 0;
+let doubleDayPrice = 0;
 let currentType = '';
 
-// Abrir Modal de Checkout
-function openCheckout(type, price) {
+// Abrir Modal de Checkout guardando o preço de 1 dia e o preço promocional de 2 dias
+function openCheckout(type, priceSingle, priceDouble) {
   currentType = type;
-  currentPrice = price;
+  singleDayPrice = priceSingle;
+  doubleDayPrice = priceDouble;
 
   const modalTitle = document.getElementById('modalTitle');
   const ticketForm = document.getElementById('ticketForm');
@@ -17,19 +19,18 @@ function openCheckout(type, price) {
   if (formContainer) formContainer.style.display = 'block';
   if (receiptContainer) receiptContainer.style.display = 'none';
 
-  // Reseta seleção de dia para a primeira opção
+  // Marca por padrão o primeiro dia
   const firstDayOption = document.querySelector('input[name="eventDayOption"][value="Sábado (28/11)"]');
   if (firstDayOption) firstDayOption.checked = true;
   
   handleDayChange();
-  updateTotal();
 
   if (checkoutModal) {
     checkoutModal.style.display = 'flex';
   }
 }
 
-// Controla a mudança do dia escolhido no modal
+// Controla a mudança do dia escolhido e recalcula os preços
 function handleDayChange() {
   const selectedDay = document.querySelector('input[name="eventDayOption"]:checked').value;
   const surpriseBonus = document.getElementById('surpriseBonus');
@@ -39,6 +40,8 @@ function handleDayChange() {
   } else {
     if (surpriseBonus) surpriseBonus.style.display = 'none';
   }
+
+  updateTotal();
 }
 
 // Fechar Modal
@@ -49,15 +52,21 @@ function closeCheckout() {
   }
 }
 
-// Atualizar preço total
+// Atualizar preço unitário e valor total em tempo real
 function updateTotal() {
   const qtyInput = document.getElementById('ticketQty');
+  const unitPriceSpan = document.getElementById('unitPrice');
   const totalPriceSpan = document.getElementById('totalPrice');
-  
-  if (qtyInput && totalPriceSpan) {
-    const qty = parseInt(qtyInput.value) || 1;
-    totalPriceSpan.innerText = (qty * currentPrice).toFixed(2);
-  }
+  const selectedDayOption = document.querySelector('input[name="eventDayOption"]:checked');
+
+  if (!selectedDayOption) return;
+
+  const selectedDay = selectedDayOption.value;
+  const activePrice = (selectedDay === 'Passaporte 2 Dias (Sáb + Dom)') ? doubleDayPrice : singleDayPrice;
+  const qty = parseInt(qtyInput.value) || 1;
+
+  if (unitPriceSpan) unitPriceSpan.innerText = activePrice.toFixed(2);
+  if (totalPriceSpan) totalPriceSpan.innerText = (qty * activePrice).toFixed(2);
 }
 
 // Processar compra e exibir comprovante
@@ -67,6 +76,8 @@ function handlePurchase(e) {
   const buyerName = document.getElementById('buyerName').value;
   const selectedDay = document.querySelector('input[name="eventDayOption"]:checked').value;
   const ticketQty = document.getElementById('ticketQty').value;
+  const activePrice = (selectedDay === 'Passaporte 2 Dias (Sáb + Dom)') ? doubleDayPrice : singleDayPrice;
+  const totalAmount = (parseInt(ticketQty) * activePrice).toFixed(2);
   const randomCode = Math.floor(100000 + Math.random() * 900000);
 
   let giftText = 'Nenhum';
@@ -78,6 +89,7 @@ function handlePurchase(e) {
   document.getElementById('recType').innerText = currentType;
   document.getElementById('recDay').innerText = selectedDay;
   document.getElementById('recQty').innerText = ticketQty;
+  document.getElementById('recTotal').innerText = totalAmount;
   document.getElementById('recGift').innerText = giftText;
   document.getElementById('recCode').innerText = randomCode;
 
@@ -88,7 +100,7 @@ function handlePurchase(e) {
   receiptContainer.style.display = 'block';
 }
 
-// Eventos de carregamento
+// Fechar ao clicar fora
 document.addEventListener('DOMContentLoaded', () => {
   const checkoutModal = document.getElementById('checkoutModal');
   if (checkoutModal) {
