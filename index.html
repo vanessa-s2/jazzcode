@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Summer Jazz Code 2026 | Garimpos + Jazz</title>
   
-  <!-- Google Fonts: Montserrat & Caveat (substituta web para Biro Script) -->
+  <!-- Google Fonts: Montserrat & Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
@@ -15,13 +15,15 @@
 </head>
 <body>
 
-  <div class="corner-decor corner-top-right"></div>
-  <div class="corner-decor corner-top-left"></div>
+  <div class="top-red-triangle-left"></div>
+  <div class="top-red-triangle-right"></div>
 
   <!-- Header -->
   <header>
     <div class="header-container">
-      <a href="#" class="logo-text">GARIMPOS <span>+ JAZZ</span></a>
+      <a href="#" class="logo-wrapper">
+        <img src="logo.png" alt="Summer Jazz Code 2026" class="header-logo">
+      </a>
       <nav>
         <ul>
           <li><a href="#lineup">Programação</a></li>
@@ -32,21 +34,21 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section com a Logo em Destaque -->
   <section class="hero">
-    <div class="badge-tag">Brechó + Música ao Vivo</div>
-    <h1 class="main-title">SUMMER JAZZ CODE</h1>
-    <div class="subtitle-code">
-      <span>JAZZ CODE</span>
-      <div class="vinyl-icon"></div>
-      <span>2026</span>
-    </div>
-    
-    <div class="event-info-bar">
-      28 & 29 NOVEMBRO 2026 • A PARTIR DAS 16H
-    </div>
-    <div class="event-location">
-      📍 Della Forneria Contemporânea • Rio do Sul / SC
+    <div class="hero-card">
+      <div class="badge-tag">Brechó + Música ao Vivo</div>
+      
+      <div class="hero-logo-container">
+        <img src="logo.png" alt="Summer Jazz Code 2026 Logo" class="main-logo-img">
+      </div>
+      
+      <div class="event-info-bar">
+        28 & 29 NOVEMBRO 2026 • A PARTIR DAS 16H
+      </div>
+      <div class="event-location">
+        📍 Della Forneria Contemporânea • Rio do Sul / SC
+      </div>
     </div>
   </section>
 
@@ -74,8 +76,8 @@
   <!-- Ingressos -->
   <section id="ingressos" class="tickets-section">
     <div class="tickets-container">
-      <h2 class="section-title">Garanta Seu Ingresso</h2>
-      <p class="section-subtitle">
+      <h2 class="section-title light">Garanta Seu Ingresso</h2>
+      <p class="section-subtitle light">
         ⚠️ Ingressos estritamente limitados por dia.
       </p>
 
@@ -87,7 +89,7 @@
             <div class="ticket-type">Ingresso Normal</div>
             <div class="ticket-price">R$ 35</div>
             <ul class="ticket-features">
-              <li>Acesso ao evento (1 dia)</li>
+              <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
               <li>Nome na Lista de Entrada</li>
             </ul>
@@ -102,7 +104,7 @@
             <div class="ticket-type">Combo Drink + Adesivos</div>
             <div class="ticket-price">R$ 55</div>
             <ul class="ticket-features">
-              <li>Acesso ao evento (1 dia)</li>
+              <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
               <li>1 Drink Cortesia no Bar</li>
               <li>Cartela de Adesivos Exclusivos</li>
@@ -117,7 +119,7 @@
             <div class="ticket-type">Combo VIP Ecobag</div>
             <div class="ticket-price">R$ 85</div>
             <ul class="ticket-features">
-              <li>Acesso ao evento (1 dia)</li>
+              <li>Acesso ao evento</li>
               <li>Acesso livre à área de Brechós</li>
               <li>1 Drink Cortesia no Bar</li>
               <li>Cartela de Adesivos Exclusivos</li>
@@ -138,7 +140,7 @@
     </div>
   </section>
 
-  <!-- Modal de Compra Fictícia -->
+  <!-- Modal de Compra Fictícia com Seleção de Dia -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-content">
       <button class="close-modal" onclick="closeCheckout()">&times;</button>
@@ -149,13 +151,28 @@
         </h3>
         
         <form id="ticketForm" onsubmit="handlePurchase(event)">
+          
           <div class="form-group">
-            <label for="eventDay">Dia do Evento</label>
-            <select id="eventDay" required>
-              <option value="Sábado (28/11) - All Jazz Quartet">Sábado (28/11) - All Jazz Quartet</option>
-              <option value="Domingo (29/11) - Azymuth">Domingo (29/11) - Azymuth</option>
-              <option value="Passaporte 2 Dias (Sáb + Dom)">Passaporte 2 Dias (Sáb + Dom)</option>
-            </select>
+            <label>Escolha os Dias do Evento:</label>
+            <div class="day-selector-options">
+              <label class="day-option">
+                <input type="radio" name="eventDayOption" value="Sábado (28/11)" checked onchange="handleDayChange()">
+                <span>Sábado (28/11)</span>
+              </label>
+              <label class="day-option">
+                <input type="radio" name="eventDayOption" value="Domingo (29/11)" onchange="handleDayChange()">
+                <span>Domingo (29/11)</span>
+              </label>
+              <label class="day-option combo-day">
+                <input type="radio" name="eventDayOption" value="Passaporte 2 Dias (Sáb + Dom)" onchange="handleDayChange()">
+                <span>Passaporte 2 Dias 🎉</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Banner do Brinde Surpresa (Aparece ao selecionar 2 Dias) -->
+          <div id="surpriseBonus" class="surprise-bonus-banner" style="display: none;">
+            🎁 <strong>BÔNUS EXCLUSIVO:</strong> Comprando o Passaporte 2 Dias você ganha um <strong>BRINDE SURPRESA EXCLUSIVO</strong> do Summer Jazz Code!
           </div>
 
           <div class="form-group">
@@ -193,8 +210,9 @@
         <div class="receipt-details">
           <p><strong>Nome:</strong> <span id="recName"></span></p>
           <p><strong>Tipo:</strong> <span id="recType"></span></p>
-          <p><strong>Data:</strong> <span id="recDay"></span></p>
+          <p><strong>Dia(s):</strong> <span id="recDay"></span></p>
           <p><strong>Qtd:</strong> <span id="recQty"></span></p>
+          <p><strong>Brinde:</strong> <span id="recGift">Nenhum</span></p>
           <p><strong>Código:</strong> #JC2026-<span id="recCode"></span></p>
         </div>
 
